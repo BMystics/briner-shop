@@ -1,0 +1,16 @@
+node_modules/
+.env
+.env.local
+.env.*.local
+npm-debug.log*
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+.claude/
+.claude/*
+
+# Backups of original HTML (now in public/) - kept locally only
+/briner-filaments.html
+/briner-redesign.html

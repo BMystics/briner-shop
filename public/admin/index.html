@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>פאנל ניהול - ברינר 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B78BB; --navy-dark:#085E92; --orange:#F5901A;
+  --bg:#F5F7FA; --gray-light:#EEF1F6; --border:#DDE3EE;
+  --text-dark:#1a1e2e; --text-mid:#3d4460; --text-light:#6B7A9A;
+  --white:#fff; --error:#dc2626; --success:#16a34a; --warn:#f59e0b;
+  --r-sm:6px; --r-md:10px; --r-lg:16px;
+  --shadow:0 2px 8px rgba(11,120,187,0.08);
+}
+body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--bg);line-height:1.5;min-height:100vh}
+a{text-decoration:none;color:var(--navy)}
+button{font-family:inherit;cursor:pointer}
+
+header{background:var(--white);border-bottom:1px solid var(--border);box-shadow:var(--shadow);position:sticky;top:0;z-index:50}
+.h-in{max-width:1320px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;gap:20px}
+.brand{font-size:20px;font-weight:900;color:var(--navy)}.brand span{color:var(--orange)}
+.h-sub{font-size:13px;color:var(--text-light);font-weight:500}
+.h-right{margin-right:auto;display:flex;gap:14px;align-items:center}
+.h-link{font-size:14px;color:var(--text-mid);font-weight:600}.h-link:hover{color:var(--navy)}
+
+.wrap{max-width:1320px;margin:0 auto;padding:24px}
+
+/* ===== Stats Grid ===== */
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-bottom:24px}
+.stat{background:var(--white);border:1px solid var(--border);border-radius:var(--r-md);padding:18px 20px;box-shadow:var(--shadow)}
+.stat-label{font-size:12px;color:var(--text-light);font-weight:600;text-transform:uppercase;letter-spacing:0.5px}
+.stat-value{font-size:26px;font-weight:900;color:var(--text-dark);margin-top:6px}
+.stat-value.navy{color:var(--navy)}
+.stat-value.success{color:var(--success)}
+.stat-value.warn{color:var(--warn)}
+
+/* ===== Tabs ===== */
+.tabs{display:flex;gap:4px;margin-bottom:16px;border-bottom:2px solid var(--gray-light)}
+.tab{padding:10px 18px;background:none;border:none;font-size:14px;font-weight:600;color:var(--text-mid);border-bottom:2px solid transparent;margin-bottom:-2px;transition:all 0.2s}
+.tab:hover{color:var(--navy)}
+.tab.active{color:var(--navy);border-bottom-color:var(--navy)}
+
+/* ===== Toolbar (filters) ===== */
+.toolbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.toolbar input,.toolbar select{padding:9px 14px;border:1px solid var(--border);border-radius:var(--r-sm);font-size:14px;font-family:inherit;background:var(--white);outline:none}
+.toolbar input:focus,.toolbar select:focus{border-color:var(--navy)}
+.toolbar input{min-width:260px}
+.btn-refresh{padding:9px 18px;background:var(--navy);color:var(--white);border:none;border-radius:var(--r-sm);font-size:14px;font-weight:700}
+.btn-refresh:hover{background:var(--navy-dark)}
+
+/* ===== Table ===== */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:14px}
+thead{background:var(--gray-light)}
+th{padding:12px 14px;text-align:right;font-size:12px;font-weight:700;color:var(--text-mid);text-transform:uppercase;letter-spacing:0.5px}
+td{padding:14px;border-bottom:1px solid var(--gray-light);color:var(--text-dark)}
+tr.row{cursor:pointer;transition:background 0.15s}
+tr.row:hover{background:#fafbfd}
+.order-no{font-family:monospace;font-weight:700;color:var(--navy)}
+.total{font-weight:800;color:var(--text-dark);text-align:left}
+.date{color:var(--text-light);font-size:13px;white-space:nowrap}
+
+/* ===== Status Badges ===== */
+.badge{display:inline-block;padding:3px 10px;border-radius:100px;font-size:11px;font-weight:700;letter-spacing:0.3px}
+.badge.pending{background:#fef3c7;color:#92400e}
+.badge.paid{background:#dcfce7;color:#166534}
+.badge.processing{background:#dbeafe;color:#1e40af}
+.badge.shipped{background:#e0e7ff;color:#3730a3}
+.badge.delivered{background:#d1fae5;color:#065f46}
+.badge.cancelled{background:#fee2e2;color:#991b1b}
+.badge.refunded{background:#f3e8ff;color:#6b21a8}
+.badge.failed{background:#fee2e2;color:#991b1b}
+
+/* ===== Empty / Loading ===== */
+.empty,.loading{padding:60px 20px;text-align:center;color:var(--text-light);font-size:14px}
+
+/* ===== Modal ===== */
+.modal-overlay{position:fixed;inset:0;background:rgba(11,30,46,0.6);display:none;align-items:center;justify-content:center;z-index:100;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:var(--white);border-radius:var(--r-lg);max-width:720px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,0.3)}
+.modal-head{padding:20px 24px;border-bottom:1px solid var(--gray-light);display:flex;align-items:center;justify-content:space-between}
+.modal-head h2{font-size:18px;font-weight:800}
+.modal-close{background:none;border:none;font-size:24px;color:var(--text-light);width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.modal-close:hover{background:var(--gray-light);color:var(--text-dark)}
+.modal-body{padding:24px}
+.modal-section{margin-bottom:20px}
+.modal-section h3{font-size:13px;font-weight:700;color:var(--text-light);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:8px}
+.kv{display:grid;grid-template-columns:120px 1fr;gap:6px 14px;font-size:14px}
+.kv .k{color:var(--text-light)}
+.kv .v{color:var(--text-dark);font-weight:600}
+.items-list{border:1px solid var(--gray-light);border-radius:var(--r-sm)}
+.items-list .row{display:grid;grid-template-columns:1fr auto auto;gap:14px;padding:10px 14px;border-bottom:1px solid var(--gray-light);font-size:13px}
+.items-list .row:last-child{border:none}
+.items-list .row.totals{background:var(--bg);font-weight:600}
+.status-form{display:flex;gap:10px;align-items:end;margin-top:12px}
+.status-form select{flex:1;padding:9px 12px;border:1px solid var(--border);border-radius:var(--r-sm);font-size:14px}
+.btn-save{padding:9px 20px;background:var(--orange);color:var(--white);border:none;border-radius:var(--r-sm);font-weight:700;font-size:14px}
+.btn-save:hover{background:#D4740F}
+
+.toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--text-dark);color:var(--white);padding:12px 24px;border-radius:var(--r-md);font-size:14px;font-weight:600;opacity:0;transition:all 0.3s;z-index:200;pointer-events:none}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast.error{background:var(--error)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="h-in">
+    <div>
+      <div class="brand">ברינר<span>3D</span></div>
+      <div class="h-sub">פאנל ניהול</div>
+    </div>
+    <div class="h-right">
+      <a href="/" class="h-link">→ לאתר</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <!-- ===== Stats ===== -->
+  <div class="stats" id="statsGrid">
+    <div class="stat"><div class="stat-label">סה"כ הזמנות</div><div class="stat-value" id="s-total">—</div></div>
+    <div class="stat"><div class="stat-label">שולמו</div><div class="stat-value success" id="s-paid">—</div></div>
+    <div class="stat"><div class="stat-label">ממתינות</div><div class="stat-value warn" id="s-pending">—</div></div>
+    <div class="stat"><div class="stat-label">הכנסות היום</div><div class="stat-value navy" id="s-today">—</div></div>
+    <div class="stat"><div class="stat-label">הכנסות החודש</div><div class="stat-value navy" id="s-month">—</div></div>
+    <div class="stat"><div class="stat-label">סה"כ הכנסות</div><div class="stat-value navy" id="s-revenue">—</div></div>
+  </div>
+
+  <!-- ===== Tabs ===== -->
+  <div class="tabs">
+    <button class="tab active" data-filter="">כל ההזמנות</button>
+    <button class="tab" data-filter="pending">ממתינות</button>
+    <button class="tab" data-filter="paid">שולמו</button>
+    <button class="tab" data-filter="processing">בהכנה</button>
+    <button class="tab" data-filter="shipped">נשלחו</button>
+    <button class="tab" data-filter="delivered">נמסרו</button>
+    <button class="tab" data-filter="cancelled">בוטלו</button>
+  </div>
+
+  <!-- ===== Toolbar ===== -->
+  <div class="toolbar">
+    <input type="search" id="search" placeholder="חיפוש: מספר הזמנה / שם / אימייל">
+    <button class="btn-refresh" id="btnRefresh">רענן</button>
+  </div>
+
+  <!-- ===== Table ===== -->
+  <div class="card">
+    <table>
+      <thead><tr>
+        <th>מספר הזמנה</th><th>לקוח</th><th>אימייל</th><th>סטטוס</th><th>תשלום</th><th>תאריך</th><th style="text-align:left">סכום</th>
+      </tr></thead>
+      <tbody id="ordersBody"></tbody>
+    </table>
+    <div id="ordersEmpty" class="empty" style="display:none">אין הזמנות להצגה</div>
+    <div id="ordersLoading" class="loading">טוען...</div>
+  </div>
+</div>
+
+<!-- ===== Modal ===== -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>פרטי הזמנה <span class="order-no" id="m-order"></span></h2>
+      <button class="modal-close" id="m-close">×</button>
+    </div>
+    <div class="modal-body" id="m-body"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/js/api.js"></script>
+<script src="/admin/js/admin.js"></script>
+</body>
+</html>

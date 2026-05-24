@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>תודה על ההזמנה - ברינר 3D</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --navy:#0B78BB; --navy-dark:#085E92; --orange:#F5901A; --orange-dark:#D4740F;
+  --gray-bg:#F5F7FA; --gray-light:#EEF1F6; --border:#DDE3EE;
+  --text-dark:#1a1e2e; --text-mid:#3d4460; --text-light:#6B7A9A;
+  --success:#16a34a; --white:#fff;
+  --radius-sm:6px; --radius-md:10px; --radius-lg:16px;
+  --shadow-sm:0 2px 8px rgba(11,120,187,0.08);
+}
+body{font-family:'Heebo',sans-serif;color:var(--text-dark);background:var(--gray-bg);line-height:1.6;min-height:100vh}
+a{text-decoration:none;color:var(--navy)}
+
+header{background:var(--white);border-bottom:1px solid var(--border);box-shadow:var(--shadow-sm)}
+.header-inner{max-width:1100px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;justify-content:space-between}
+.logo{font-size:22px;font-weight:900;color:var(--navy)}
+.logo span{color:var(--orange)}
+
+.wrap{max-width:900px;margin:0 auto;padding:32px 24px 60px}
+
+.hero{background:linear-gradient(135deg,var(--navy-dark),var(--navy));color:var(--white);border-radius:var(--radius-lg);padding:36px 32px;text-align:center;margin-bottom:24px;box-shadow:var(--shadow-sm);transition:background 0.4s}
+.hero.pending{background:linear-gradient(135deg,#7c5300,#b8860b)}
+.hero.failed{background:linear-gradient(135deg,#7f1d1d,#b91c1c)}
+.success-icon{width:64px;height:64px;background:var(--success);border-radius:50%;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-size:32px;color:var(--white)}
+.hero.pending .success-icon{background:#f59e0b;animation:spin 2s linear infinite}
+.hero.failed .success-icon{background:#dc2626}
+@keyframes spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.hero h1{font-size:28px;font-weight:900;margin-bottom:6px}
+.hero p{font-size:15px;opacity:0.85}
+.order-number{font-size:26px;font-weight:900;color:var(--orange);background:rgba(255,255,255,0.08);display:inline-block;padding:10px 22px;border-radius:var(--radius-sm);margin-top:14px;letter-spacing:1px;font-family:monospace}
+
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px 28px;box-shadow:var(--shadow-sm);margin-bottom:20px}
+.card h2{font-size:16px;font-weight:800;margin-bottom:16px;padding-bottom:12px;border-bottom:1px solid var(--gray-light)}
+
+.detail-row{display:flex;justify-content:space-between;padding:6px 0;font-size:14px}
+.detail-row .label{color:var(--text-light)}
+.detail-row .value{color:var(--text-dark);font-weight:600;text-align:left}
+
+.items-table{width:100%;font-size:14px}
+.items-table th, .items-table td{padding:10px 6px;text-align:right;border-bottom:1px solid var(--gray-light)}
+.items-table th{font-size:12px;color:var(--text-light);font-weight:600;text-transform:uppercase}
+.items-table td{color:var(--text-dark)}
+
+.totals-row{display:flex;justify-content:space-between;padding:7px 0;font-size:14px;color:var(--text-mid)}
+.totals-row.free{color:var(--success);font-weight:700}
+.totals-row.total{font-size:18px;font-weight:900;color:var(--text-dark);border-top:2px solid var(--gray-light);margin-top:10px;padding-top:14px}
+
+.actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px}
+.btn{padding:12px 28px;border-radius:var(--radius-sm);font-size:15px;font-weight:700;font-family:'Heebo',sans-serif;cursor:pointer;border:none;text-decoration:none;display:inline-block}
+.btn-primary{background:var(--orange);color:var(--white)}
+.btn-primary:hover{background:var(--orange-dark)}
+.btn-secondary{background:var(--white);color:var(--text-mid);border:1.5px solid var(--border)}
+.btn-secondary:hover{border-color:var(--navy);color:var(--navy)}
+
+.loading, .error-state{text-align:center;padding:60px 20px;color:var(--text-light)}
+.error-state{color:#dc2626}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">ברינר<span>3D</span></a>
+    <a href="/filaments">→ חזרה לחנות</a>
+  </div>
+</header>
+
+<div class="wrap">
+  <div id="loading" class="loading">טוען פרטי הזמנה...</div>
+  <div id="errorState" class="error-state" style="display:none"></div>
+  <div id="content" style="display:none">
+    <div class="hero" id="heroBox">
+      <div class="success-icon" id="heroIcon">✓</div>
+      <h1 id="heroTitle">תודה על ההזמנה!</h1>
+      <p id="heroSubtitle">ההזמנה התקבלה במערכת. שמרנו את הפרטים והעתק יישלח אליך באימייל.</p>
+      <div class="order-number" id="orderNumber"></div>
+    </div>
+
+    <div class="card">
+      <h2>פרטי הזמנה</h2>
+      <div class="detail-row"><span class="label">שם</span><span class="value" id="d-name"></span></div>
+      <div class="detail-row"><span class="label">אימייל</span><span class="value" id="d-email"></span></div>
+      <div class="detail-row"><span class="label">טלפון</span><span class="value" id="d-phone"></span></div>
+      <div class="detail-row"><span class="label">כתובת למשלוח</span><span class="value" id="d-address"></span></div>
+      <div class="detail-row" id="d-notes-row" style="display:none"><span class="label">הערות</span><span class="value" id="d-notes"></span></div>
+      <div class="detail-row"><span class="label">סטטוס</span><span class="value" id="d-status"></span></div>
+    </div>
+
+    <div class="card">
+      <h2>פריטים</h2>
+      <table class="items-table">
+        <thead><tr><th>מוצר</th><th>מחיר יח'</th><th>כמות</th><th>סה"כ</th></tr></thead>
+        <tbody id="itemsBody"></tbody>
+      </table>
+      <div style="margin-top:18px">
+        <div class="totals-row"><span>סכום לפני מע"מ</span><span id="t-subtotal"></span></div>
+        <div class="totals-row"><span>מע"מ</span><span id="t-vat"></span></div>
+        <div class="totals-row" id="shipping-row"><span>משלוח</span><span id="t-shipping"></span></div>
+        <div class="totals-row total"><span>סה"כ</span><span id="t-total"></span></div>
+      </div>
+    </div>
+
+    <div class="card" id="paymentCard" style="text-align:center">
+      <h2 id="paymentHeading">תשלום</h2>
+      <p id="paymentText" style="color:var(--text-mid);margin-bottom:14px"></p>
+      <div class="actions">
+        <a href="/filaments" class="btn btn-secondary">המשך קניות</a>
+        <button class="btn btn-primary" id="btnPay" style="display:none">מעבר לתשלום ←</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="/js/api.js"></script>
+<script src="/js/order-confirmation.js"></script>
+</body>
+</html>
