@@ -24,6 +24,10 @@ const publicDir = path.resolve(__dirname, '..', 'public');
 
 const app = express();
 
+// פרודקשן רץ מאחורי Railway proxy - מאמינים ל-X-Forwarded-* headers
+// (1 = trust 1 hop, צריך עבור express-rate-limit שמשתמש ב-req.ip)
+if (config.isProd) app.set('trust proxy', 1);
+
 // --- Middleware ---
 // helmet: הוספת headers של אבטחה (X-Frame-Options, CSP וכו')
 // contentSecurityPolicy מבוטל כי ה-HTML משתמש ב-inline styles ו-fonts.googleapis.com
