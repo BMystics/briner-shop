@@ -29,8 +29,40 @@ const app = express();
 // contentSecurityPolicy מבוטל כי ה-HTML משתמש ב-inline styles ו-fonts.googleapis.com
 app.use(helmet({ contentSecurityPolicy: false }));
 
-// CORS: מאפשר לדפדפן לקרוא ל-API מ-origin אחר (חשוב לפיתוח)
-app.use(cors({ origin: true, credentials: true }));
+// CORS: בפיתוח - הכל. בפרודקשן - רק same-origin + railway.app + custom domains מ-ALLOWED_ORIGINS
+const corsOptions = {
+  credentials: true,
+  origin(origin, callback) {
+    // בקשות ללא origin (curl, server-to-server, same-origin) - תמיד מותר
+    if (!origin) return callback(null, true);
+    // dev - הכל מותר
+    if (!config.isProd) return callback(null, true);
+
+    let hostname;
+    try { hostname = new URL(origin).hostname; }
+    catch { return callback(new Error('CORS: invalid origin'), false); }
+
+    // PUBLIC_URL של הפרויקט - תמיד מותר
+    try {
+      if (hostname === new URL(config.publicUrl).hostname) return callback(null, true);
+    } catch { /* ignore */ }
+
+    // כל subdomain של railway.app (כולל PR preview deployments)
+    if (/\.up\.railway\.app$/.test(hostname) || /\.railway\.app$/.test(hostname)) {
+      return callback(null, true);
+    }
+
+    // localhost - לצורכי debugging מול שרת production
+    if (/^localhost$|^127\.0\.0\.1$/.test(hostname)) return callback(null, true);
+
+    // ALLOWED_ORIGINS (CSV) - דומיינים מותאמים אישית (למשל briner.co.il)
+    const extra = (process.env.ALLOWED_ORIGINS || '').split(',').map(s => s.trim()).filter(Boolean);
+    if (extra.some(o => o === origin || o === hostname)) return callback(null, true);
+
+    callback(new Error(`CORS: origin not allowed: ${origin}`), false);
+  },
+};
+app.use(cors(corsOptions));
 
 // Body parsers: ממירים body של בקשות JSON ל-req.body
 app.use(express.json({ limit: '1mb' }));

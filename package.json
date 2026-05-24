@@ -6,7 +6,11 @@
   "main": "server/index.js",
   "scripts": {
     "start": "node server/index.js",
-    "dev": "nodemon server/index.js"
+    "dev": "nodemon server/index.js",
+    "check:supabase": "node scripts/check-supabase.js",
+    "seed:supabase": "node scripts/seed-supabase.js",
+    "test:email": "node scripts/test-email.js",
+    "postinstall": "echo 'briner-shop installed'"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.45.0",
