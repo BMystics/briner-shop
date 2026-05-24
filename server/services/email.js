@@ -1,18 +1,22 @@
 // ============================================
-// שליחת מיילים דרך SMTP (nodemailer)
+// שליחת מיילים - תומך ב-Resend (HTTP) או SMTP (nodemailer)
 // ============================================
-// במצב mock (אין SMTP credentials) - הודעות נדפסות לקונסול במקום להישלח.
-// כך אפשר לבדוק את כל הזרימה בלי לחבר Gmail/SendGrid.
+// סדר עדיפויות:
+// 1. אם RESEND_API_KEY מוגדר - משתמשים ב-Resend (HTTP, עובד מאחורי firewalls)
+// 2. אחרת אם SMTP credentials מוגדרים - משתמשים ב-nodemailer
+// 3. אחרת - מצב mock (לוג בלבד)
 // ============================================
 import nodemailer from 'nodemailer';
-import { config, usingPlaceholders } from '../config.js';
+import { Resend } from 'resend';
+import { config, usingPlaceholders, emailProvider } from '../config.js';
 import { customerOrderPaidEmail, adminNewOrderEmail } from './email-templates.js';
 
 let _transporter = null;
+let _resend = null;
 
 function getTransporter() {
   if (_transporter) return _transporter;
-  if (usingPlaceholders.smtp) return null;
+  if (emailProvider !== 'smtp') return null;
   _transporter = nodemailer.createTransport({
     host: config.smtp.host,
     port: config.smtp.port,
@@ -22,17 +26,39 @@ function getTransporter() {
   return _transporter;
 }
 
+function getResend() {
+  if (_resend) return _resend;
+  if (emailProvider !== 'resend') return null;
+  _resend = new Resend(config.resend.apiKey);
+  return _resend;
+}
+
 async function sendMail({ to, subject, html, replyTo }) {
-  if (usingPlaceholders.smtp) {
+  if (!emailProvider) {
     // mock mode - log only
     console.log('\n📧 [mock email] ───────────────────────');
     console.log(`   To:      ${to}`);
     console.log(`   Subject: ${subject}`);
     console.log(`   Reply:   ${replyTo || '(none)'}`);
-    console.log(`   (הגדר SMTP credentials ב-.env כדי לשלוח באמת)`);
+    console.log(`   (הגדר RESEND_API_KEY או SMTP_* ב-.env כדי לשלוח באמת)`);
     console.log('───────────────────────────────────────\n');
     return { mock: true };
   }
+
+  if (emailProvider === 'resend') {
+    const r = getResend();
+    const res = await r.emails.send({
+      from: config.smtp.from,
+      to,
+      subject,
+      html,
+      replyTo: replyTo ? [replyTo] : undefined,
+    });
+    if (res.error) throw new Error(`Resend: ${res.error.message || JSON.stringify(res.error)}`);
+    return { mock: false, messageId: res.data?.id, provider: 'resend' };
+  }
+
+  // SMTP
   const tx = getTransporter();
   const info = await tx.sendMail({
     from: config.smtp.from,
@@ -41,7 +67,7 @@ async function sendMail({ to, subject, html, replyTo }) {
     html,
     replyTo,
   });
-  return { mock: false, messageId: info.messageId };
+  return { mock: false, messageId: info.messageId, provider: 'smtp' };
 }
 
 // ============== Public API ==============
@@ -86,10 +112,14 @@ export async function sendOrderPaidEmails(order, items) {
 }
 
 // Helper לבדיקה ב-/api/health
-// חשוב: verify() עושה חיבור TCP אמיתי. אם פורט חסום (כמו 587 ב-Railway)
-// הוא יחכה דקה+. לכן אנחנו עוטפים ב-timeout של 4 שניות.
 export async function checkEmailConfig() {
-  if (usingPlaceholders.smtp) return { ready: false, mode: 'mock' };
+  if (!emailProvider) return { ready: false, mode: 'mock' };
+  if (emailProvider === 'resend') {
+    // ל-Resend אין endpoint רשמי ל-verify. נניח שהמפתח קיים = ready.
+    // אם המפתח שגוי, נראה את זה רק בניסיון שליחה הראשון.
+    return { ready: true, mode: 'resend' };
+  }
+  // SMTP - verify עם timeout
   try {
     const tx = getTransporter();
     await Promise.race([

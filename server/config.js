@@ -41,6 +41,12 @@ export const config = {
     admin: process.env.EMAIL_ADMIN,
   },
 
+  // Resend (HTTP API) - חלופה ל-SMTP, עובד גם מאחורי firewalls שחוסמים SMTP
+  // אם RESEND_API_KEY מוגדר, נשתמש בו במקום nodemailer
+  resend: {
+    apiKey: process.env.RESEND_API_KEY,
+  },
+
   admin: {
     user: process.env.ADMIN_USER || 'admin',
     password: process.env.ADMIN_PASSWORD || 'admin',
@@ -55,8 +61,15 @@ export const config = {
 };
 
 // בדיקה אם credentials הם placeholders (כדי לדעת אם להריץ ב-mock mode)
+// בודק אם יש איזשהו ספק מייל מוגדר (Resend או SMTP אמיתי, לא placeholders)
+const hasResend = !!config.resend.apiKey && !config.resend.apiKey.includes('placeholder');
+const hasSmtp = !!config.smtp.user && !config.smtp.user.includes('placeholder');
+
 export const usingPlaceholders = {
   supabase: !config.supabase.url || config.supabase.url.includes('placeholder'),
   payplus: !config.payplus.apiKey || config.payplus.apiKey.includes('placeholder'),
-  smtp: !config.smtp.user || config.smtp.user.includes('placeholder'),
+  smtp: !hasResend && !hasSmtp,  // אין מייל אם אין אף אחד מהשניים
 };
+
+// איזה ספק מייל בשימוש: 'resend' / 'smtp' / null (mock)
+export const emailProvider = hasResend ? 'resend' : (hasSmtp ? 'smtp' : null);
