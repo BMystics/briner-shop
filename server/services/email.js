@@ -94,7 +94,7 @@ export async function checkEmailConfig() {
     const tx = getTransporter();
     await Promise.race([
       tx.verify(),
-      new Promise((_, rej) => setTimeout(() => rej(new Error('verify timeout 4s')), 4000)),
+      new Promise((_, rej) => setTimeout(() => rej(new Error('verify timeout 15s')), 15000)),
     ]);
     return { ready: true, mode: 'smtp' };
   } catch (e) {
