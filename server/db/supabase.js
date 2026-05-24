@@ -6,6 +6,7 @@
 // לעולם אל תחשוף את service_role key בצד הלקוח!
 // ============================================
 import { createClient } from '@supabase/supabase-js';
+import WebSocket from 'ws';
 import { config, usingPlaceholders } from '../config.js';
 
 let _client = null;
@@ -16,8 +17,12 @@ export function getSupabase() {
     // ב-mock mode מחזירים null - ה-routes יודעים לטפל בזה
     return null;
   }
+  // ב-Node < 22 אין global WebSocket. Supabase realtime client קורס באתחול
+  // אם לא מספקים לו transport. אנחנו לא משתמשים ב-realtime בכלל,
+  // אבל הוא מאותחל אוטומטית כשיוצרים client.
   _client = createClient(config.supabase.url, config.supabase.serviceKey, {
     auth: { persistSession: false, autoRefreshToken: false },
+    realtime: { transport: WebSocket },
   });
   return _client;
 }
