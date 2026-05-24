@@ -86,11 +86,16 @@ export async function sendOrderPaidEmails(order, items) {
 }
 
 // Helper לבדיקה ב-/api/health
+// חשוב: verify() עושה חיבור TCP אמיתי. אם פורט חסום (כמו 587 ב-Railway)
+// הוא יחכה דקה+. לכן אנחנו עוטפים ב-timeout של 4 שניות.
 export async function checkEmailConfig() {
   if (usingPlaceholders.smtp) return { ready: false, mode: 'mock' };
   try {
     const tx = getTransporter();
-    await tx.verify();
+    await Promise.race([
+      tx.verify(),
+      new Promise((_, rej) => setTimeout(() => rej(new Error('verify timeout 4s')), 4000)),
+    ]);
     return { ready: true, mode: 'smtp' };
   } catch (e) {
     return { ready: false, mode: 'smtp', error: e.message };
