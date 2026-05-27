@@ -75,5 +75,22 @@
     if (catalogEl) catalogEl.innerHTML = D.categories.map(renderCategory).join('');
   }
 
-  document.addEventListener('DOMContentLoaded', render);
+  // Header dropdown: hover works via CSS; this adds tap-to-open for touch devices
+  // and closes the menu when clicking elsewhere.
+  function initNav() {
+    document.querySelectorAll('.nav-item > .nav-link').forEach((toggle) => {
+      toggle.addEventListener('click', (e) => {
+        const item = toggle.parentElement;
+        const wasOpen = item.classList.contains('open');
+        document.querySelectorAll('.nav-item.open').forEach((i) => i.classList.remove('open'));
+        if (!wasOpen) item.classList.add('open');
+        e.stopPropagation();
+      });
+    });
+    document.addEventListener('click', () => {
+      document.querySelectorAll('.nav-item.open').forEach((i) => i.classList.remove('open'));
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => { render(); initNav(); });
 })();
