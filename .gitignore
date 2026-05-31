@@ -14,3 +14,8 @@ Thumbs.db
 # Backups of original HTML (now in public/) - kept locally only
 /briner-filaments.html
 /briner-redesign.html
+
+# Personal/reference docs kept locally only (also keeps Railway uploads small)
+*.docx
+*.doc
+*.pdf
