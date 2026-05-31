@@ -62,13 +62,33 @@
 .value-card h3{font-size:17px;font-weight:800;color:var(--text-dark);margin-bottom:6px}
 .value-card p{font-size:14px;color:var(--text-mid);line-height:1.6;margin:0}
 
-@media(max-width:680px){
-  .about-hero h1{font-size:42px}
-  .about-hero p{font-size:16px}
-  .about-section{padding:44px 20px}
-  .about-inner h2{font-size:26px}
-  .timeline-item{grid-template-columns:80px 1fr;gap:12px;padding-right:24px}
-  .timeline-year{font-size:18px}
+@media(max-width:1024px){
+  .about-hero{padding:60px 20px 52px}
+  .about-hero h1{font-size:48px}
+  .about-hero p{font-size:17px}
+  .about-hero-stats{gap:14px;margin-top:28px}
+  .about-stat{padding:14px 22px;min-width:120px}
+  .about-stat-num{font-size:26px}
+  .about-section{padding:48px 20px}
+  .about-inner h2{font-size:28px}
+  .timeline-item{grid-template-columns:90px 1fr;gap:14px;padding-right:26px}
+  .timeline-year{font-size:20px}
+  .values-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .about-hero{padding:48px 16px 44px}
+  .about-hero h1{font-size:36px}
+  .about-hero p{font-size:15px}
+  .about-hero-stats{gap:10px}
+  .about-stat{padding:10px 16px;min-width:90px;flex:1}
+  .about-stat-num{font-size:22px}
+  .about-section{padding:40px 16px}
+  .about-inner h2{font-size:24px}
+  .about-prose{font-size:15px}
+  .timeline-item{grid-template-columns:70px 1fr;gap:10px;padding-right:22px}
+  .timeline-year{font-size:16px}
+  .values-grid{grid-template-columns:1fr}
+  .cats-mini{grid-template-columns:1fr 1fr}
 }
 </style>
 </head>

@@ -225,11 +225,12 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.75);padding:60px 24p
 .wa-float svg{width:28px;height:28px;fill:var(--white)}
 
 /* ============ Mobile: hamburger + slide-down panel ============ */
-.hamburger{display:none;width:40px;height:40px;background:transparent;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;align-items:center;justify-content:center;padding:0;flex-shrink:0}
-.hamburger span{display:block;width:20px;height:2px;background:var(--text-dark);position:relative;transition:var(--transition)}
-.hamburger span::before,.hamburger span::after{content:'';position:absolute;left:0;width:20px;height:2px;background:var(--text-dark);transition:var(--transition)}
-.hamburger span::before{top:-6px}
-.hamburger span::after{top:6px}
+.hamburger{display:none;width:48px;height:48px;background:var(--orange);border:none;border-radius:var(--radius-sm);cursor:pointer;align-items:center;justify-content:center;padding:0;flex-shrink:0;transition:var(--transition)}
+.hamburger:hover{background:var(--orange-dark)}
+.hamburger span{display:block;width:22px;height:2.5px;background:var(--white);position:relative;transition:var(--transition);border-radius:2px}
+.hamburger span::before,.hamburger span::after{content:'';position:absolute;left:0;width:22px;height:2.5px;background:var(--white);transition:var(--transition);border-radius:2px}
+.hamburger span::before{top:-7px}
+.hamburger span::after{top:7px}
 .hamburger.open span{background:transparent}
 .hamburger.open span::before{top:0;transform:rotate(45deg)}
 .hamburger.open span::after{top:0;transform:rotate(-45deg)}
@@ -249,45 +250,46 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.75);padding:60px 24p
 .mobile-panel-cta .mp-wa:hover{background:#1faa54;color:var(--white)}
 
 /* ============ Homepage responsive breakpoints ============ */
-@media(max-width:880px){
-  .header-inner{padding:0 16px;gap:10px;height:64px}
-  .mobile-panel{top:64px}
-  .logo-wrap img{max-height:36px;width:auto}
+@media(max-width:1024px){
+  .header-inner{padding:0 16px;gap:12px;height:64px}
+  .mobile-panel{top:64px;max-height:calc(100vh - 64px)}
+  .logo-wrap img{max-height:38px;width:auto}
   nav{display:none}
   .hamburger{display:flex}
   .mobile-panel{display:block}
-  .header-actions .action-btn{display:none}
-  .header-actions{gap:6px}
-  .btn-primary{padding:8px 14px;font-size:13px}
-  .btn-primary svg{width:14px;height:14px}
-  .announcement{font-size:12px;padding:7px 14px}
+  .header-actions{display:none}
+  .announcement{display:none}
   .hero{min-height:auto;padding:0}
-  .hero-inner{grid-template-columns:1fr;padding:50px 20px;gap:32px;text-align:right}
-  .hero h1{font-size:32px;line-height:1.15;margin-bottom:14px}
-  .hero-desc{font-size:15px;margin-bottom:24px}
-  .hero-ctas{margin-bottom:32px}
-  .btn-hero-primary,.btn-hero-secondary{padding:12px 20px;font-size:14px}
-  .hero-stats{gap:16px;flex-wrap:wrap}
-  .hero-stats .stat{flex:1;min-width:90px}
+  .hero-inner{grid-template-columns:1fr;padding:48px 20px 56px;gap:28px;text-align:right}
+  .hero h1{font-size:42px;line-height:1.12;margin-bottom:16px;letter-spacing:-0.5px}
+  .hero-desc{font-size:17px;margin-bottom:28px;line-height:1.65}
+  .hero-ctas{margin-bottom:36px}
+  .btn-hero-primary,.btn-hero-secondary{padding:14px 24px;font-size:15px}
+  .hero-stats{gap:18px;flex-wrap:wrap}
+  .hero-stats .stat{flex:1;min-width:100px}
   .hero-shapes{display:none}
+  .hero-visual{display:none}
   .section-inner,.cat-grid,.products-grid{padding-left:16px!important;padding-right:16px!important}
-  .section-title{font-size:26px!important}
-  .section-subtitle{font-size:14px!important}
-  .cat-grid{grid-template-columns:1fr 1fr!important;gap:12px!important}
+  .section-title{font-size:28px!important;line-height:1.2}
+  .section-subtitle{font-size:15px!important}
+  .cat-grid{grid-template-columns:1fr!important;gap:14px!important;max-width:520px;margin:0 auto}
   .footer-inner{flex-direction:column;text-align:center;gap:16px}
   .footer-links{justify-content:center}
-  .wa-float{width:50px;height:50px;bottom:18px;left:18px}
-  .wa-float svg{width:26px;height:26px}
+  .wa-float{width:54px;height:54px;bottom:18px;left:18px}
+  .wa-float svg{width:28px;height:28px}
 }
-@media(max-width:480px){
-  .hero h1{font-size:26px}
-  .hero-badge{font-size:11px;padding:5px 10px}
+@media(max-width:600px){
+  .hero h1{font-size:36px}
+  .hero-desc{font-size:16px}
+  .hero-badge{font-size:12px;padding:5px 12px}
   .hero-ctas{flex-direction:column;align-items:stretch}
   .btn-hero-primary,.btn-hero-secondary{text-align:center}
-  .cat-grid{grid-template-columns:1fr!important}
-  .header-actions .btn-primary span,.header-actions .btn-primary{font-size:0}
-  .header-actions .btn-primary{padding:8px;width:36px;height:36px}
-  .header-actions .btn-primary svg{width:18px;height:18px}
+  .section-title{font-size:24px!important}
+}
+@media(max-width:380px){
+  .hero h1{font-size:30px}
+  .logo-wrap img{max-height:32px}
+  .hamburger{width:44px;height:44px}
 }
 </style>
 </head>
