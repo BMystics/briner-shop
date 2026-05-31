@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>אודות - ג. ברינר ובניו, מאז 1895</title>
+<meta name="description" content="ג. ברינר ובניו - חברה ותיקה לייצור חותמות ומוצרי סימון, פועלת בישראל מאז 1895. חמישה דורות של מצוינות במגוון פתרונות החתמה וסימון.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/category.css">
+<style>
+/* ---- About-page specific layout (not used by catalog pages) ---- */
+.about-hero{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 50%,var(--navy-light) 100%);padding:80px 24px 70px;position:relative;overflow:hidden;text-align:center}
+.about-hero::before{content:'';position:absolute;inset:0;opacity:0.06;background-image:repeating-linear-gradient(45deg,#fff 0,#fff 1px,transparent 0,transparent 50%);background-size:28px 28px}
+.about-hero-inner{max-width:900px;margin:0 auto;position:relative;z-index:1}
+.about-eyebrow{display:inline-block;background:rgba(255,255,255,0.12);color:var(--orange-light);font-size:13px;font-weight:700;padding:6px 16px;border-radius:100px;letter-spacing:1px;margin-bottom:18px;border:1px solid rgba(255,255,255,0.18)}
+.about-hero h1{font-size:64px;font-weight:900;color:var(--white);line-height:1.05;margin-bottom:18px;letter-spacing:-1.5px}
+.about-hero h1 em{color:var(--orange-light);font-style:normal}
+.about-hero p{font-size:18px;color:rgba(255,255,255,0.82);line-height:1.7;max-width:700px;margin:0 auto}
+.about-hero-stats{display:flex;gap:20px;flex-wrap:wrap;justify-content:center;margin-top:36px}
+.about-stat{background:rgba(255,255,255,0.08);border:1px solid rgba(255,255,255,0.15);border-radius:var(--radius-md);padding:16px 28px;min-width:140px}
+.about-stat-num{font-size:30px;font-weight:900;color:var(--white)}
+.about-stat-num span{color:var(--orange-light);font-size:20px}
+.about-stat-label{font-size:12px;color:rgba(255,255,255,0.65);margin-top:2px;letter-spacing:0.5px}
+
+.about-section{padding:64px 24px}
+.about-section.alt{background:var(--white)}
+.about-inner{max-width:1100px;margin:0 auto}
+.about-inner .section-tag{display:inline-block;background:var(--gray-light);color:var(--navy);font-size:12px;font-weight:700;padding:5px 14px;border-radius:100px;letter-spacing:0.8px;margin-bottom:12px;text-transform:uppercase}
+.about-inner h2{font-size:34px;font-weight:900;color:var(--text-dark);letter-spacing:-0.5px;margin-bottom:8px;display:flex;align-items:center;gap:14px}
+.about-inner h2::before{content:'';width:8px;height:36px;background:var(--orange);border-radius:4px}
+.about-inner .lede{font-size:17px;color:var(--text-mid);margin-bottom:24px;max-width:780px}
+.about-prose{max-width:780px;font-size:16px;line-height:1.85;color:var(--text-mid)}
+.about-prose p{margin-bottom:14px}
+.about-prose strong{color:var(--text-dark)}
+
+/* Placeholder note - visible amber box so user knows where to fill in real content */
+.placeholder-note{background:#FFF8E1;border:1.5px dashed var(--orange);border-radius:var(--radius-md);padding:14px 18px;margin:14px 0 20px;font-size:14px;color:#7A5A00;line-height:1.6;max-width:780px}
+.placeholder-note strong{color:var(--orange-dark)}
+
+/* Timeline */
+.timeline{position:relative;padding:20px 22px 0 0;max-width:820px}
+.timeline::before{content:'';position:absolute;top:0;bottom:20px;right:10px;width:2px;background:linear-gradient(to bottom,var(--orange) 0%,var(--navy-light) 100%);border-radius:2px}
+.timeline-item{position:relative;padding:0 32px 28px 0;display:grid;grid-template-columns:120px 1fr;gap:20px;align-items:start}
+.timeline-item::before{content:'';position:absolute;top:8px;right:5px;width:14px;height:14px;background:var(--orange);border:3px solid var(--white);border-radius:50%;box-shadow:0 0 0 2px var(--orange)}
+.timeline-year{font-size:24px;font-weight:900;color:var(--navy);font-family:'Heebo',monospace;text-align:left;padding-right:8px}
+.timeline-body{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-md);padding:16px 20px;box-shadow:var(--shadow-sm)}
+.timeline-body strong{display:block;font-size:16px;color:var(--text-dark);margin-bottom:4px}
+.timeline-body p{font-size:14px;color:var(--text-mid);line-height:1.6;margin:0}
+
+/* Mini categories grid (uses real category pages) */
+.cats-mini{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:12px;margin-top:18px}
+.cat-mini{display:flex;align-items:center;gap:10px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-md);padding:14px 16px;font-size:14px;font-weight:600;color:var(--text-mid);transition:var(--transition)}
+.cat-mini:hover{border-color:var(--navy);color:var(--navy);box-shadow:var(--shadow-sm);transform:translateY(-2px)}
+.cat-mini-dot{width:8px;height:8px;background:var(--orange);border-radius:50%;flex-shrink:0}
+
+/* Values grid */
+.values-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:18px;margin-top:18px}
+.value-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-lg);padding:24px;transition:var(--transition)}
+.value-card:hover{box-shadow:var(--shadow-md);transform:translateY(-3px);border-color:var(--navy)}
+.value-icon{width:48px;height:48px;background:linear-gradient(135deg,var(--orange),var(--orange-dark));border-radius:var(--radius-md);display:flex;align-items:center;justify-content:center;color:var(--white);font-size:22px;font-weight:900;margin-bottom:14px}
+.value-card h3{font-size:17px;font-weight:800;color:var(--text-dark);margin-bottom:6px}
+.value-card p{font-size:14px;color:var(--text-mid);line-height:1.6;margin:0}
+
+@media(max-width:680px){
+  .about-hero h1{font-size:42px}
+  .about-hero p{font-size:16px}
+  .about-section{padding:44px 20px}
+  .about-inner h2{font-size:26px}
+  .timeline-item{grid-template-columns:80px 1fr;gap:12px;padding-right:24px}
+  .timeline-year{font-size:18px}
+}
+</style>
+</head>
+<body>
+<div class="announcement">
+  <strong>חותמות ומוצרי סימון מאז 1895</strong><span>|</span>חמישה דורות של מצוינות<span>|</span><strong>תוצרת ישראל</strong>
+</div>
+<header>
+  <div class="header-inner">
+    <a href="/" class="logo">ברינר<em>·</em>חותמות</a>
+    <nav>
+      <div class="nav-item">
+        <div class="nav-link">חותמות ואביזרי סימון
+          <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+        <div class="dropdown">
+          <a href="/rubber">חותמות גומי</a>
+          <a href="/ink">דיו וכריות לדיו</a>
+          <a href="/dates">תאריכונים ומספרונים</a>
+          <a href="/heat">חותמות לסימון בחום</a>
+          <a href="/steel">מקבי פלדה להטבעה</a>
+          <a href="/wax">חותמות שעווה</a>
+          <a href="/law">חותמות נוטריוניות</a>
+          <a href="#">שבלונות שלטים ותגים</a>
+          <a href="#">סימון בטון / מזון</a>
+          <a href="/security">פלומבות לאבטחה</a>
+        </div>
+      </div>
+      <a href="/filaments" class="nav-link">פילמנטים 3D</a>
+      <a href="/about" class="nav-link active">אודות</a>
+      <a href="/#contact" class="nav-link">יצירת קשר</a>
+    </nav>
+    <div class="header-actions">
+      <a href="tel:03-5602991" class="action-btn"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6.06 6.06l1.95-1.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>03-5602991</a>
+      <a href="https://wa.me/972585833949" class="cta-btn" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M17.6 6.32A8.78 8.78 0 0 0 12.05 4 8.79 8.79 0 0 0 4.4 17.13L4 21l3.96-1.04A8.79 8.79 0 0 0 20.83 12a8.74 8.74 0 0 0-3.23-5.68z"/></svg>WhatsApp</a>
+    </div>
+  </div>
+</header>
+
+<section class="about-hero">
+  <div class="about-hero-inner">
+    <div class="about-eyebrow">ג. ברינר ובניו · מאז 1895</div>
+    <h1>למעלה מ-<em>130 שנה</em><br>של החתמה וסימון</h1>
+    <p>חברה משפחתית ותיקה הפועלת בישראל מאז 1895, מתמחה במגוון רחב של חותמות, פלומבות, דיו, מקבי פלדה ופתרונות סימון תעשייתיים.</p>
+    <div class="about-hero-stats">
+      <div class="about-stat"><div class="about-stat-num">1895</div><div class="about-stat-label">שנת הייסוד</div></div>
+      <div class="about-stat"><div class="about-stat-num">130<span>+</span></div><div class="about-stat-label">שנות פעילות</div></div>
+      <div class="about-stat"><div class="about-stat-num">8</div><div class="about-stat-label">קטגוריות מוצרים</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="about-section">
+  <div class="about-inner">
+    <span class="section-tag">הסיפור שלנו</span>
+    <h2>היסטוריה של מצוינות</h2>
+    <p class="lede">חברה משפחתית שמלווה את התעשייה הישראלית מאז ראשית המאה ה-20.</p>
+    <div class="placeholder-note">
+      <strong>📝 לעריכה:</strong> כאן ייכנסו פסקאות על הסיפור האמיתי של החברה — איך נוסדה ע"י ג. ברינר ב-1895, מה ההתמחות המקורית הייתה, איך התפתחה לאורך הדורות, ומה עיקרי הפעילות היום. שלח לי את הטקסט הנכון ואחליף.
+    </div>
+    <div class="about-prose">
+      <p><strong>פסקה לדוגמה — להחליף.</strong> ג. ברינר ובניו היא חברה משפחתית ותיקה שמלווה את התעשייה, המסחר והשירותים הציבוריים בישראל כבר למעלה מ-130 שנה. החברה נוסדה בשנת 1895 ועברה מדור לדור, תוך התאמה מתמדת לטכנולוגיות החדשות מבלי לוותר על האיכות והדיוק שמאפיינים אותה מאז ומתמיד.</p>
+      <p><strong>פסקה לדוגמה — להחליף.</strong> היום אנחנו מייצרים מגוון רחב של חותמות גומי, חותמות שעווה, חותמות נוטריוניות, פלומבות עופרת, מקבי פלדה, תאריכונים, ועוד — בכל הגדלים, לכל המגזרים, ולכל הצרכים. אנחנו משרתים משרדי עורכי דין, רואי חשבון, חברות יבוא ויצוא, רשויות, מפעלי תעשייה ועוד.</p>
+    </div>
+  </div>
+</section>
+
+<section class="about-section alt">
+  <div class="about-inner">
+    <span class="section-tag">אבני דרך</span>
+    <h2>הדרך שלנו</h2>
+    <div class="placeholder-note">
+      <strong>📝 לעריכה:</strong> אלה אבני דרך לדוגמה. שלח את האירועים והשנים האמיתיים (ייסוד, מעבר מקום, הוספת קווי ייצור, מעבר דורי, פרסים, וכו') ואני אחליף.
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">1895</div>
+        <div class="timeline-body">
+          <strong>ייסוד החברה</strong>
+          <p>ג. ברינר מקים את החברה — נקודת ההתחלה של מסורת שמלווה את התעשייה והמסחר בארץ עד היום. <em>[פרטים מדויקים — להשלים]</em></p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">19XX</div>
+        <div class="timeline-body">
+          <strong>אבן דרך — להשלים</strong>
+          <p>תיאור של אירוע מרכזי: הרחבה, מעבר מקום, הצטרפות דור חדש, פיתוח קו מוצרים, וכו'.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">19XX</div>
+        <div class="timeline-body">
+          <strong>אבן דרך — להשלים</strong>
+          <p>תיאור של אירוע מרכזי: הרחבה, מעבר מקום, הצטרפות דור חדש, פיתוח קו מוצרים, וכו'.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">20XX</div>
+        <div class="timeline-body">
+          <strong>אבן דרך — להשלים</strong>
+          <p>תיאור של אירוע מרכזי: הרחבה, מעבר מקום, הצטרפות דור חדש, פיתוח קו מוצרים, וכו'.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2026</div>
+        <div class="timeline-body">
+          <strong>הדור הבא — אונליין</strong>
+          <p>השקת האתר החדש, עם קטלוג מקוון מלא של כל קווי המוצרים והזמנה ישירה ב-WhatsApp.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="about-section">
+  <div class="about-inner">
+    <span class="section-tag">המוצרים שלנו</span>
+    <h2>מה אנחנו עושים היום</h2>
+    <p class="lede">מגוון רחב של פתרונות החתמה, סימון וזיהוי לכל המגזרים — מהמשרד הקטן ועד הקו התעשייתי.</p>
+    <div class="cats-mini">
+      <a href="/rubber" class="cat-mini"><span class="cat-mini-dot"></span>חותמות גומי</a>
+      <a href="/wax" class="cat-mini"><span class="cat-mini-dot"></span>חותמות שעווה</a>
+      <a href="/heat" class="cat-mini"><span class="cat-mini-dot"></span>סימון בחום</a>
+      <a href="/law" class="cat-mini"><span class="cat-mini-dot"></span>חותמות נוטריון</a>
+      <a href="/ink" class="cat-mini"><span class="cat-mini-dot"></span>דיו וכריות</a>
+      <a href="/dates" class="cat-mini"><span class="cat-mini-dot"></span>תאריכונים ומספרונים</a>
+      <a href="/steel" class="cat-mini"><span class="cat-mini-dot"></span>מקבי פלדה</a>
+      <a href="/security" class="cat-mini"><span class="cat-mini-dot"></span>פלומבות לאבטחה</a>
+    </div>
+  </div>
+</section>
+
+<section class="about-section alt">
+  <div class="about-inner">
+    <span class="section-tag">הערכים שלנו</span>
+    <h2>מה מוביל אותנו</h2>
+    <div class="placeholder-note">
+      <strong>📝 לעריכה:</strong> אלה ערכים לדוגמה. שלח את הערכים האמיתיים של החברה (או נסחר אותם ביחד) ואחליף.
+    </div>
+    <div class="values-grid">
+      <div class="value-card">
+        <div class="value-icon">⚙</div>
+        <h3>איכות ללא פשרות</h3>
+        <p>כל פריט שיוצא מהמפעל עובר בקרת איכות מדוקדקת — מה שיוצר אצלנו עומד בסטנדרט הגבוה ביותר.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">⏱</div>
+        <h3>מסירה מהירה</h3>
+        <p>מלאי מלא בכל קווי המוצרים מאפשר לנו לספק במהירות, גם להזמנות דחופות.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🤝</div>
+        <h3>שירות אישי</h3>
+        <p>חברה משפחתית — מי שעונה לטלפון מכיר את המוצרים, ויודע להמליץ על הפתרון המתאים בדיוק לצורך שלך.</p>
+      </div>
+      <div class="value-card">
+        <div class="value-icon">🇮🇱</div>
+        <h3>תוצרת ישראל</h3>
+        <p>חלק ניכר מהמוצרים מיוצר כאן בארץ — תמיכה מלאה בתעשייה המקומית ובאיכות שניתן לעמוד מאחוריה.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="bottom-cta">
+  <div class="bottom-cta-inner">
+    <h2>רוצה לדעת <em>עוד</em>?</h2>
+    <p>צוות החברה זמין לכל שאלה, ייעוץ או הצעת מחיר. נשמח לעמוד לרשותך.</p>
+    <div class="cta-buttons">
+      <a href="https://wa.me/972585833949" class="cta-btn-lg cta-wa" target="_blank" rel="noopener"><svg viewBox="0 0 24 24"><path d="M17.6 6.32A8.78 8.78 0 0 0 12.05 4 8.79 8.79 0 0 0 4.4 17.13L4 21l3.96-1.04A8.79 8.79 0 0 0 20.83 12a8.74 8.74 0 0 0-3.23-5.68z"/></svg>WhatsApp</a>
+      <a href="tel:03-5602991" class="cta-btn-lg cta-phone"><svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6.06 6.06l1.95-1.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>03-5602991</a>
+      <a href="mailto:briner@briner.co.il" class="cta-btn-lg cta-email"><svg viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z M22 6l-10 7L2 6"/></svg>אימייל</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-links">
+      <a href="/">בית</a><a href="/about">אודות</a><a href="/rubber">חותמות גומי</a><a href="/wax">חותמות שעווה</a><a href="/heat">סימון בחום</a><a href="/law">נוטריוניות</a><a href="/filaments">פילמנטים 3D</a><a href="tel:03-5602991">03-5602991</a><a href="mailto:briner@briner.co.il">briner@briner.co.il</a><a href="https://wa.me/972585833949">WhatsApp</a>
+    </div>
+    <div class="footer-copy">© 2026 ג. ברינר ובניו · כל הזכויות שמורות · מאז 1895</div>
+  </div>
+</footer>
+<a href="https://wa.me/972585833949" class="wa-float" target="_blank" rel="noopener" title="WhatsApp"><svg viewBox="0 0 24 24"><path d="M17.6 6.32A8.78 8.78 0 0 0 12.05 4 8.79 8.79 0 0 0 4.4 17.13L4 21l3.96-1.04A8.79 8.79 0 0 0 20.83 12a8.74 8.74 0 0 0-3.23-5.68zM12.05 19.5a7.31 7.31 0 0 1-3.72-1.02l-.27-.16-2.76.72.74-2.69-.17-.28a7.3 7.3 0 1 1 13.55-3.81 7.27 7.27 0 0 1-7.37 7.24z"/></svg></a>
+<script src="/js/category-render.js"></script>
+</body>
+</html>

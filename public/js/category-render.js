@@ -64,11 +64,12 @@
   }
 
   function render() {
+    const catalogEl = $('catalog');
+    if (!catalogEl) return; // not a catalog page (e.g. /about) — just init nav
     const D = window.CATEGORY_DATA;
     if (!D) { console.error('CATEGORY_DATA not set'); return; }
     const heroEl = $('hero');
     const catNavEl = $('catNav');
-    const catalogEl = $('catalog');
     if (heroEl && D.hero) heroEl.innerHTML = renderHero(D.hero);
     if (catNavEl && D.categories?.length > 1) catNavEl.innerHTML = renderCategoryNav(D.categories);
     else if (catNavEl) catNavEl.style.display = 'none';
