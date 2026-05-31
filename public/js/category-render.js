@@ -91,6 +91,24 @@
     document.addEventListener('click', () => {
       document.querySelectorAll('.nav-item.open').forEach((i) => i.classList.remove('open'));
     });
+
+    // Mobile hamburger: toggles the slide-down panel.
+    const burger = document.querySelector('.hamburger');
+    const panel = document.querySelector('.mobile-panel');
+    if (burger && panel) {
+      burger.addEventListener('click', (e) => {
+        e.stopPropagation();
+        burger.classList.toggle('open');
+        panel.classList.toggle('open');
+      });
+      // Close panel when tapping a link inside it
+      panel.querySelectorAll('a').forEach((a) => {
+        a.addEventListener('click', () => {
+          burger.classList.remove('open');
+          panel.classList.remove('open');
+        });
+      });
+    }
   }
 
   document.addEventListener('DOMContentLoaded', () => { render(); initNav(); });

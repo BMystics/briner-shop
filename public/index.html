@@ -223,6 +223,72 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.75);padding:60px 24p
 .wa-float{position:fixed;bottom:28px;left:28px;z-index:999;width:56px;height:56px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 20px rgba(37,211,102,0.45);transition:var(--transition)}
 .wa-float:hover{transform:scale(1.1)}
 .wa-float svg{width:28px;height:28px;fill:var(--white)}
+
+/* ============ Mobile: hamburger + slide-down panel ============ */
+.hamburger{display:none;width:40px;height:40px;background:transparent;border:1px solid var(--border);border-radius:var(--radius-sm);cursor:pointer;align-items:center;justify-content:center;padding:0;flex-shrink:0}
+.hamburger span{display:block;width:20px;height:2px;background:var(--text-dark);position:relative;transition:var(--transition)}
+.hamburger span::before,.hamburger span::after{content:'';position:absolute;left:0;width:20px;height:2px;background:var(--text-dark);transition:var(--transition)}
+.hamburger span::before{top:-6px}
+.hamburger span::after{top:6px}
+.hamburger.open span{background:transparent}
+.hamburger.open span::before{top:0;transform:rotate(45deg)}
+.hamburger.open span::after{top:0;transform:rotate(-45deg)}
+.mobile-panel{display:none;position:fixed;top:76px;left:0;right:0;background:var(--white);border-bottom:1px solid var(--border);box-shadow:var(--shadow-md);max-height:calc(100vh - 76px);overflow-y:auto;z-index:999;transform:translateY(-100%);opacity:0;pointer-events:none;transition:transform 0.3s ease,opacity 0.3s ease}
+.mobile-panel.open{transform:translateY(0);opacity:1;pointer-events:all}
+.mobile-panel-inner{padding:14px 20px 24px}
+.mobile-section-title{font-size:11px;font-weight:700;color:var(--text-light);letter-spacing:1px;text-transform:uppercase;padding:14px 0 8px;border-top:1px solid var(--border);margin-top:6px}
+.mobile-section-title:first-child{border-top:0;margin-top:0;padding-top:6px}
+.mobile-panel a{display:flex;align-items:center;gap:10px;padding:12px 14px;border-radius:var(--radius-sm);font-size:15px;color:var(--text-mid);font-weight:500;transition:var(--transition)}
+.mobile-panel a:hover{background:var(--gray-bg);color:var(--navy)}
+.mobile-panel a::before{content:'•';color:var(--orange);font-size:14px}
+.mobile-panel-cta{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)}
+.mobile-panel-cta a{justify-content:center;padding:12px;border-radius:var(--radius-sm);font-weight:700;font-size:14px}
+.mobile-panel-cta a::before{content:none}
+.mobile-panel-cta .mp-phone{background:var(--gray-bg);color:var(--text-dark)}
+.mobile-panel-cta .mp-wa{background:#25D366;color:var(--white)}
+.mobile-panel-cta .mp-wa:hover{background:#1faa54;color:var(--white)}
+
+/* ============ Homepage responsive breakpoints ============ */
+@media(max-width:880px){
+  .header-inner{padding:0 16px;gap:10px;height:64px}
+  .mobile-panel{top:64px}
+  .logo-wrap img{max-height:36px;width:auto}
+  nav{display:none}
+  .hamburger{display:flex}
+  .mobile-panel{display:block}
+  .header-actions .action-btn{display:none}
+  .header-actions{gap:6px}
+  .btn-primary{padding:8px 14px;font-size:13px}
+  .btn-primary svg{width:14px;height:14px}
+  .announcement{font-size:12px;padding:7px 14px}
+  .hero{min-height:auto;padding:0}
+  .hero-inner{grid-template-columns:1fr;padding:50px 20px;gap:32px;text-align:right}
+  .hero h1{font-size:32px;line-height:1.15;margin-bottom:14px}
+  .hero-desc{font-size:15px;margin-bottom:24px}
+  .hero-ctas{margin-bottom:32px}
+  .btn-hero-primary,.btn-hero-secondary{padding:12px 20px;font-size:14px}
+  .hero-stats{gap:16px;flex-wrap:wrap}
+  .hero-stats .stat{flex:1;min-width:90px}
+  .hero-shapes{display:none}
+  .section-inner,.cat-grid,.products-grid{padding-left:16px!important;padding-right:16px!important}
+  .section-title{font-size:26px!important}
+  .section-subtitle{font-size:14px!important}
+  .cat-grid{grid-template-columns:1fr 1fr!important;gap:12px!important}
+  .footer-inner{flex-direction:column;text-align:center;gap:16px}
+  .footer-links{justify-content:center}
+  .wa-float{width:50px;height:50px;bottom:18px;left:18px}
+  .wa-float svg{width:26px;height:26px}
+}
+@media(max-width:480px){
+  .hero h1{font-size:26px}
+  .hero-badge{font-size:11px;padding:5px 10px}
+  .hero-ctas{flex-direction:column;align-items:stretch}
+  .btn-hero-primary,.btn-hero-secondary{text-align:center}
+  .cat-grid{grid-template-columns:1fr!important}
+  .header-actions .btn-primary span,.header-actions .btn-primary{font-size:0}
+  .header-actions .btn-primary{padding:8px;width:36px;height:36px}
+  .header-actions .btn-primary svg{width:18px;height:18px}
+}
 </style>
 </head>
 <body>
@@ -278,6 +344,7 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.75);padding:60px 24p
       <a href="#about" class="nav-link">אודות</a>
       <a href="#contact" class="nav-link">יצירת קשר</a>
     </nav>
+    <button class="hamburger" aria-label="פתיחת תפריט" aria-expanded="false"><span></span></button>
     <div class="header-actions">
       <a href="tel:03-5602991" class="action-btn">
         <svg viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12 19.79 19.79 0 0 1 1.62 3.38 2 2 0 0 1 3.6 1.21h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L7.91 9a16 16 0 0 0 6.06 6.06l1.95-1.95a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
@@ -287,6 +354,27 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.75);padding:60px 24p
         <svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
         וואטסאפ
       </a>
+    </div>
+  </div>
+  <div class="mobile-panel" id="mobilePanel">
+    <div class="mobile-panel-inner">
+      <div class="mobile-section-title">קטגוריות מוצרים</div>
+      <a href="/rubber">חותמות גומי</a>
+      <a href="/ink">דיו וכריות לדיו</a>
+      <a href="/dates">תאריכונים ומספרונים</a>
+      <a href="/heat">חותמות לסימון בחום</a>
+      <a href="/steel">מקבי פלדה להטבעה</a>
+      <a href="/wax">חותמות שעווה</a>
+      <a href="/law">חותמות נוטריוניות</a>
+      <a href="/security">פלומבות לאבטחה</a>
+      <div class="mobile-section-title">כללי</div>
+      <a href="/filaments">פילמנטים 3D</a>
+      <a href="/about">אודות</a>
+      <a href="#contact">יצירת קשר</a>
+      <div class="mobile-panel-cta">
+        <a href="tel:03-5602991" class="mp-phone">03-5602991</a>
+        <a href="https://wa.me/972585833949" class="mp-wa" target="_blank" rel="noopener">WhatsApp</a>
+      </div>
     </div>
   </div>
 </header>
@@ -506,5 +594,26 @@ footer{background:var(--text-dark);color:rgba(255,255,255,0.75);padding:60px 24p
 <a href="https://wa.me/972585833949" class="wa-float" title="שלחו הודעה בוואטסאפ">
   <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
+<script>
+// Mobile hamburger toggle
+(function(){
+  var burger = document.querySelector('.hamburger');
+  var panel = document.getElementById('mobilePanel');
+  if (!burger || !panel) return;
+  burger.addEventListener('click', function(e){
+    e.stopPropagation();
+    var open = burger.classList.toggle('open');
+    panel.classList.toggle('open', open);
+    burger.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+  panel.querySelectorAll('a').forEach(function(a){
+    a.addEventListener('click', function(){
+      burger.classList.remove('open');
+      panel.classList.remove('open');
+      burger.setAttribute('aria-expanded','false');
+    });
+  });
+})();
+</script>
 </body>
 </html>
